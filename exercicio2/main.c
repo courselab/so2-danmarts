@@ -1,11 +1,3 @@
-/*
- *    SPDX-FileCopyrightText: 2021 Monaco F. J. <monaco@usp.br>
- *   
- *    SPDX-License-Identifier: GPL-3.0-or-later
- *
- *    This file is part of SYSeg, available at https://gitlab.com/monaco/syseg.
- */
-
 #include "bios.h"
 #include "utils.h"
 
@@ -14,27 +6,38 @@
 
 char buffer[SIZE];		/* Read buffer.      */
 
+// Function to get the available RAM memory
+unsigned int get_available_memory() {
+    unsigned int memory;
+    __asm__("mov $0x88, %%eax;"
+            "int $0x15;"
+            "mov %%eax, %0;"
+            : "=r" (memory)
+            :
+            : "%eax");
+    return memory;
+}
+
 int main()
 {
   clear();
   
-  println  ("Boot Command 1.0");
+  println("Boot Command 1.0");
 
   while (1)
     {
       print(PROMPT);		/* Show prompt.               */
-      readln(buffer);		/* Read use input.            */
+      readln(buffer);		/* Read user input.            */
 
       if (buffer[0])		/* Execute built-in command.  */
 	{
-	  if (!strcmp(buffer,"help"))
-	    println("A Beattles's song.");
+	    unsigned int memory = get_available_memory();
+	    println("Available RAM memory: %d KB", memory);
+	  }
 	  else 
-	    println("Unkown command.");
+	    println("Unknown command.");
 	}
     }
   
   return 0;
-
 }
-
