@@ -1,0 +1,12 @@
+d. Compare 'hw.bin' with 'eg.bin'. Do the outputs match? 
+  Sim, os outputs deram match.
+
+e. Disassemble 'hw.bin' and compare the result with 'hw.S'.  Does the output (at least approximately) matches 'hw.S'?
+  Sim.
+
+f. Boot 'hw.bin' using the 'qemu' emulator. Does it work?
+  Sim, funcionou e teve a saída esperada.
+
+g. Boot 'hw.bin' in a real piece of hardware.	Does it work?
+  Sim, funcionou.
+
