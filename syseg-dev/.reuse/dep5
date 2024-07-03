@@ -1,0 +1,51 @@
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: SYSeg
+Upstream-Contact: Monaco F. J. <monaco@usp.br>
+Source: https://gitlab.com/monaco/syseg
+
+# Test programs
+
+Files: test/*
+Copyright: 2021 Monaco F. J. <monaco@usp.br>
+License: GPL-3.0-or-later
+
+# Autoconf tests
+
+Files: m4/ax_pthread.m4
+Copyright: 2008 Steven G. Johnson <stevenj@alum.mit.edu>
+	   2011 Daniel Richard G. <skunk@iSKUNK.ORG>
+	   2019 Marc Stevens <marc.stevens@cwi.nl>
+License: GPL-3.0-or-later
+
+Files: m4/ax_check_compile_flag.m4
+Copyright: 2008 Guido U. Draheim <guidod@gmx.de>
+	   2011 Maarten Bosmans <mkbosmans@gmail.com>
+License: LicenseRef-Autoconf-Archive
+
+Files: m4/ax_gcc_func_attribute.m4
+Copyright: 2013 Gabriele Svelto <gabriele.svelto@gmail.com>
+License: LicenseRef-Autoconf-Archive
+
+Files: m4/ax_compiler_vendor.m4
+Copyright: 2008 Steven G. Johnson <stevenj@alum.mit.edu>
+           2008 Matteo Frigo
+           2018-19 John Zaitseff <J.Zaitseff@zap.org.au>
+License: GPL-3.0-or-later
+
+Files: m4/ax_compiler_version.m4
+Copyright: 2014 Bastien ROUCARIES <roucaries.bastien+autoconf@gmail.com>
+License: LicenseRef-Autoconf-Archive
+
+Files: try/hack01/*
+Copyright: 2021 Monaco F. J. <monaco@usp.br>
+License: GPL-3.0-or-later
+
+
+# New-file templates
+
+Files: tools/newfile.*
+Copyright: 2021 Monaco F. J. <monaco@usp.br>
+License: GPL-3.0-or-later
+
+
+
