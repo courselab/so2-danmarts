@@ -3,36 +3,55 @@
 
 #include <stddef.h>
 
-#define FS_SIGLEN 8
+// Buffer size
 #define BUFF_SIZE 256
+
+// Prompt for the shell
 #define PROMPT "BratOS> "
-#define FS_HEADER_ADDR 0x10000 /* Endereço do cabeçalho do sistema de arquivos na RAM */
 
-// Definição da estrutura fs_header_t
-struct fs_header_t {
-    unsigned char signature[FS_SIGLEN];    /* The file system signature.              */
-    unsigned short total_number_of_sectors; /* Number of 512-byte disk blocks.         */
-    unsigned short number_of_boot_sectors;  /* Sectors reserved for boot code.         */
-    unsigned short number_of_file_entries;  /* Maximum number of files in the disk.    */
-    unsigned short max_file_size;           /* Maximum size of a file in blocks.       */
-    unsigned int unused_space;              /* Remaining space less than max_file_size.*/
-} __attribute__((packed));
+// File System Header Address
+#define FS_HEADER_ADDR 0x7E00
 
-// Definição da estrutura cmd_t
+// Signature size in the file system header
+#define SIGNATURE_SIZE 8
+
+// Struct for command
 struct cmd_t {
     const char *name;
-    void (*funct)(void);
+    void (*funct)();
 };
 
-// Funções declaradas para uso no kernel.c
-void my_memcpy(void *dest, const void *src, size_t n);
-void kmain(void);
-void f_info(void);
-void f_help(void);
-void f_quit(void);
-void f_ls(void);
-void bios_load_sector(int sector, char *buffer);
-void kwrite_itoa(unsigned short num);
+// Struct for the file system header
+struct fs_header_t {
+    char signature[SIGNATURE_SIZE];
+    unsigned short total_number_of_sectors;
+    unsigned short number_of_boot_sectors;
+    unsigned short number_of_file_entries;
+    unsigned short max_file_size;
+    unsigned short unused_space;
+};
 
-#endif /* KERNEL_H */
+// Function prototypes
+void __attribute__((fastcall)) clear(void);
+void __attribute__((fastcall)) kwrite(const char *str);
+void __attribute__((fastcall)) kwrite_char(char c);
+int __attribute__((fastcall)) kread(char *buffer);  // Ajustado para alinhar com bios2.h
+void register_syscall_handler();
+void splash();
+void halt();
+void bios_load_sector(int sector, char *buffer);
+void my_memcpy(void *dest, const void *src, size_t n);
+void kwrite_itoa(unsigned short num);
+void kwrite_fixed_length_string(const char *str, size_t length);
+void f_help();
+void f_quit();
+void f_info();
+void f_ls();
+void shell();
+void kmain(void);
+
+
+
+
+#endif // KERNEL_H
 

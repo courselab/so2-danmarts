@@ -52,7 +52,7 @@ void f_info()
 
     kwrite("File System Information:\n");
     kwrite("  Signature: ");
-    kwrite(fs_header.signature);
+    kwrite_fixed_length_string(fs_header.signature, SIGNATURE_SIZE);
     kwrite("\n  Total Number of Sectors: ");
     kwrite_itoa(fs_header.total_number_of_sectors);
     kwrite("\n  Number of Boot Sectors: ");
@@ -102,25 +102,91 @@ void my_memcpy(void *dest, const void *src, size_t n)
 
 void kwrite_itoa(unsigned short num)
 {
-    char buffer[6];
-    int i = 4;
-    buffer[5] = '\0';
+    char buffer[6]; // Alocamos espaço para até 5 dígitos + 1 para o terminador '\0'
+    int i = 5; // Começamos do último índice do buffer
+    
+    buffer[5] = '\0'; // Terminador de string
+
+    // Caso especial: se num for 0, apenas escrevemos "0"
     if (num == 0)
     {
-        buffer[4] = '0';
-        i--;
+        buffer[--i] = '0';
     }
     else
     {
-        while (num > 0 && i >= 0)
+        // Convertendo cada dígito do número para caracteres ASCII
+        while (num != 0 && i >= 0)
         {
-            buffer[i] = '0' + (num % 10);
+            buffer[--i] = '0' + (num % 10);
             num /= 10;
-            i--;
         }
     }
-    kwrite(&buffer[i + 1]);
+
+    // Agora escrevemos a string no buffer usando kwrite
+    kwrite(&buffer[i]);
 }
+
+
+
+// Implementação simples de putchar para um ambiente simulado
+void putchar(char c) {
+    // Aqui, você deve substituir com a lógica real de saída
+    // Por exemplo, enviar para um dispositivo de saída ou buffer de tela
+    // Esta é uma implementação simples apenas para demonstração
+
+    // Suponha que você tenha uma variável global ou um endereço de memória que simule o buffer de vídeo
+    // Neste exemplo, vamos simular um buffer de vídeo básico usando uma matriz de caracteres
+    // Substitua isso com sua lógica real de saída para o emulador ou simulador
+
+    // Exemplo de simulação básica de um buffer de vídeo
+    static char video_buffer[25][80]; // Tamanho simulado do buffer de vídeo (25 linhas x 80 colunas)
+    static int cursor_x = 0;
+    static int cursor_y = 0;
+
+    if (c == '\n') {
+        // Nova linha: avance para a próxima linha
+        cursor_x = 0;
+        cursor_y++;
+    } else {
+        // Escreva o caractere no buffer de vídeo simulado
+        video_buffer[cursor_y][cursor_x] = c;
+        cursor_x++;
+
+        // Se atingir o final da linha, vá para a próxima linha
+        if (cursor_x >= 80) {
+            cursor_x = 0;
+            cursor_y++;
+        }
+
+        // Se atingir o final do buffer de vídeo, role para cima (simulação simples)
+        if (cursor_y >= 25) {
+            // Implemente sua lógica de rolagem aqui
+            // Por exemplo, mover todas as linhas para cima e limpar a última linha
+            // Esta é uma simulação muito básica apenas para fins de demonstração
+        }
+    }
+}
+
+// Implementação de kwrite_char usando putchar
+void __attribute__((fastcall)) kwrite_char(char c) {
+    putchar(c);
+}
+
+// Função para imprimir uma string de comprimento fixo usando kwrite_char
+void kwrite_fixed_length_string(const char *str, size_t length)
+{
+    for (size_t i = 0; i < length; i++)
+    {
+        // Converta o caractere para um byte ASCII imprimível
+        char printable_char = str[i];
+        if (printable_char < 32 || printable_char > 126) {
+            printable_char = '.';  // Caracteres não imprimíveis são substituídos por '.'
+        }
+        kwrite_char(printable_char);
+    }
+}
+
+
 
 void kmain(void)
 {
