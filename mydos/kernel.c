@@ -1,8 +1,6 @@
 /*
- *    SPDX-FileCopyrightText: 2021 Monaco F. J. <monaco@usp.br>
  *    SPDX-FileCopyrightText: 2024 Ana Júlia Tagliassachi
- *    SPDX-FileCopyrightText: 2024 Monaco F. J. <monaco@usp.br>
- *    SPDX-FileCopyrightText: 2024 danmartsar <daniel.martins@lonvi.com.br>
+ *    SPDX-FileCopyrightText: 2024 Daniel Martins Arrais
  *   
  *    SPDX-License-Identifier: GPL-3.0-or-later
  *
@@ -41,7 +39,7 @@ struct fs_header_t *get_fs_header() {
 /* Função principal do kernel */
 void kmain(void) {
     register_syscall_handler(); /* Registra o manipulador de syscall no int 0x21 */
-    //    splash();       /* Tela de splash desnecessária */
+    splash();       /* Tela de splash desnecessária */
     shell();        /* Inicia o interpretador de linha de comando */
     halt();         /* Na saída, halt */
 }
@@ -156,34 +154,6 @@ void f_exec(const char* binary_file_name) {
   LerDisco(bin_sector_coordinate, fs_header->max_file_size, program_sector_start);
 
   exec_prog();
-
-  /* All this was disabled (can be safely removed).
-     Function exec_prog implemented in bios2.S. */
-  
-  /*
-  __asm__ volatile(
-      "  call get_return_addr_into_ebx \n"  // coloca o return address em ebx
-
-      "original_return_addr: \n"  // será usado para calcular o valor que deve ser adicionado à stack
-
-      "  push %%ebx \n"  // colocar o ebx na stack
-
-      "  jmp *%[progAddr] \n"  // jump pra main
-      "get_return_addr_into_ebx: \n"
-      "  mov (%%esp), %%ebx \n"  // coloca o topo da stack em ebx
-
-      "  mov $prog_finish, %%ecx \n"           // ecx = endereço de prog_finish
-      "  sub $original_return_addr, %%ecx \n"  // ecx -= endereço de original_return_addr
-
-      "  add %%ecx, %%ebx \n"  // soma ecx em ebx, ou seja, faz com que ebx aponte para prog_finish
-      "  ret \n"
-
-      "prog_finish:"
-
-      ::[progAddr] "r"(program));
-
-  */
-  
 }
 
 

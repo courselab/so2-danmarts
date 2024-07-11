@@ -1,8 +1,7 @@
 /*
  *    SPDX-FileCopyrightText: 2021 Monaco F. J. <monaco@usp.br>
  *    SPDX-FileCopyrightText: 2024 Ana Júlia Tagliassachi
- *    SPDX-FileCopyrightText: 2024 Monaco F. J. <monaco@usp.br>
- *    SPDX-FileCopyrightText: 2024 danmartsar <daniel.martins@lonvi.com.br>
+ *    SPDX-FileCopyrightText: 2024 Daniel Martins Arrais>
  *   
  *    SPDX-License-Identifier: GPL-3.0-or-later
  *
