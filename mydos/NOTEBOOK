@@ -6,3 +6,8 @@
 Por ser uma matéria optativa, sentimos que o trabalho era bastante específico e isso exigiu uma grande curva de aprendizado no início. Nos primeiros dias, demoramos muito para entender o funcionamento e a interligação dos arquivos. Tivemos um problema ao ler os arquivos no disco a partir da RAM, mas com a ajuda de alguns colegas que cursam a matéria, conseguimos entender a lógica.
 
 Além disso, enfrentamos problemas na execução do binário devido à incompatibilidade entre o código assembly feito à mão e o gerado pelo GCC. Especificamente, foi necessário adicionar .code16gcc no arquivo crt0.S. Sem essa diretiva, o código C e o assembly não funcionavam bem juntos. Além disso, percebemos que ao empurrar o endereço de retorno, estávamos usando push, mas deveríamos usar pushl (4 bytes), conforme a convenção do .code16gcc.
+
+AVALIAÇÃO
+=========
+
+Excelente!!
